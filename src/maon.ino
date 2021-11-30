@@ -6,5 +6,5 @@ void setup(void) {
 
 
 void loop(void) {
-
+  maon_loop();
 }

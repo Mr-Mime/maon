@@ -2,13 +2,34 @@
 
 #include "logger.h"
 #include "network.h"
+#include "storage.h"
 
 void maon_init(void) {
   logger_init();
-  log("CPU running at: ", esp_get_cpu_freq_mhz());
   network_init();
+  storage_init();
 }
 
 void maon_loop(void) {
+  // Get newest order id from the shop api
+  uint16_t server_id = network_get_highest_order_id();
+
+  // Get saved order id, which was highest so far
+  uint16_t local_id = storage_get_id();
+
+  log("Server id is: ", server_id);
+  log("Local id is : ", local_id);
+
+  if (server_id > local_id) {
+    storage_set_id(server_id);
+
+    // TODO: Turn transistor for light on
+  }
+  
+
+  // Temporary delay, to not spam the server
+  // with requests
+  network_fini();
+  delay(10000);
 
 }
