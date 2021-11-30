@@ -4,6 +4,11 @@
 
 #include "logger.h"
 
+// Create client which connects to the webserver
+// The secure client is needed to perform a TLS encrypted connection
+static HTTPClient http;
+static WiFiClientSecure secure_client;
+
 void network_init(void) {
   // Connect to the wifi
   log("Connecting to: ", WIFI_SSID);
@@ -15,13 +20,11 @@ void network_init(void) {
     log(".");
   }
 
-  log("Connected to WiFi.");
+  log("Connected to WiFi");
+}
 
-  // Create client which connects to the webserver
-  // The secure client is needed to perform a TLS encrypted connection
-  HTTPClient http;
-  WiFiClientSecure secure_client;
 
+int network_get_highest_order_id(void) {
   // Trust the server and connect to it securely
   secure_client.setInsecure();
   secure_client.connect(SERVER_URL, SERVER_PORT);
@@ -37,7 +40,9 @@ void network_init(void) {
 
   log("HTTP GET returned: ", httpCode);
 
-  if (httpCode != 0) { //Check the returning code
+  if (httpCode != 200) { //Check the returning code
+    return -1;
+  } else {
     // Get the request response payload
     String payload = http.getString();
 
@@ -45,9 +50,16 @@ void network_init(void) {
     // End of the JSON looks like this: '{"id":764}]}'
     int index_start = payload.lastIndexOf(":");
     int index_end   = payload.lastIndexOf("]") - 1;
-    log("Thus the id should be: ", payload.substring(index_start +1, index_end).c_str());
-
+    int highest_id  = atoi(payload.substring(index_start +1, index_end).c_str());
+   
+    if (highest_id == 0) {
+      log(payload);
+    }
+    return highest_id;
   }
- 
+}
+
+
+void network_fini(void) {
   http.end();   //Close connection
 }
