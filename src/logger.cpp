@@ -2,6 +2,7 @@
 
 void logger_init(void) {
   Serial.begin(115200);
+  Serial.print("\r");
 }
 
 void log(const char* msg) {
