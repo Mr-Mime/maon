@@ -21,7 +21,7 @@ void maon_loop(void) {
   log("Local id is : ", local_id);
 
   // Do stuff if the server id is greater
-  if (server_id > local_id) {
+  if (server_id != 0 && server_id > local_id) {
     // First store the new id
     storage_set_id(server_id);
 

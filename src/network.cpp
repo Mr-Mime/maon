@@ -24,7 +24,9 @@ void network_init(void) {
 }
 
 
-int network_get_highest_order_id(void) {
+uint16_t network_get_highest_order_id(void) {
+  int current_try = 0;
+
   // Trust the server and connect to it securely
   secure_client.setInsecure();
   secure_client.connect(SERVER_URL, SERVER_PORT);
@@ -35,28 +37,36 @@ int network_get_highest_order_id(void) {
   http.setAuthorization(SERVER_API_KEY, "");
   http.begin(secure_client, SERVER_URL);
 
-  // Get the information
-  int httpCode = http.GET();
+  for(current_try; current_try < 3; current_try++) {
 
-  log("HTTP GET returned: ", httpCode);
+    // Get the information
+    int httpCode = http.GET();
 
-  if (httpCode != 200) { //Check the returning code
-    return -1;
-  } else {
-    // Get the request response payload
-    String payload = http.getString();
+    log("HTTP GET returned: ", httpCode);
+    log("HTTP GET try: ", current_try+1);
 
-    // Find the last order id
-    // End of the JSON looks like this: '{"id":764}]}'
-    int index_start = payload.lastIndexOf(":");
-    int index_end   = payload.lastIndexOf("]") - 1;
-    int highest_id  = atoi(payload.substring(index_start +1, index_end).c_str());
+    if (httpCode == 200) { //Check the returning code
+      // Get the request response payload
+      String payload = http.getString();
+
+      // Find the last order id
+      // End of the JSON looks like this: '{"id":764}]}'
+      int index_start = payload.lastIndexOf(":");
+      int index_end   = payload.lastIndexOf("]") - 1;
+      int highest_id  = atoi(payload.substring(index_start +1, index_end).c_str());
    
-    if (highest_id == 0) {
-      log(payload);
+      // Sometimes we get a 0 as false response
+      if (highest_id == 0) {
+        continue;
+      }
+
+      return highest_id;
     }
-    return highest_id;
+
   }
+
+  // Only reached if all 3 tries failed
+  return 0;
 }
 
 
