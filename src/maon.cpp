@@ -20,16 +20,20 @@ void maon_loop(void) {
   log("Server id is: ", server_id);
   log("Local id is : ", local_id);
 
+  // Do stuff if the server id is greater
   if (server_id > local_id) {
+    // First store the new id
     storage_set_id(server_id);
 
     // TODO: Turn transistor for light on
   }
   
 
-  // Temporary delay, to not spam the server
-  // with requests
+  // Finalize things
   network_fini();
-  delay(10000);
+  storage_fini();
+  logger_fini();
 
+  // Send ESP to sleep
+  ESP.deepSleep(6e6);
 }

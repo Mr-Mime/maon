@@ -4,6 +4,8 @@
 #include <Arduino.h>
 
 void logger_init(void);
+void logger_fini(void);
+
 void log(const char* msg);
 void log(String msg);
 void log(const char* msg, const char* arg);

@@ -5,6 +5,11 @@ void logger_init(void) {
   Serial.print("\r");
 }
 
+void logger_fini(void) {
+  Serial.flush();
+  Serial.end();
+}
+
 void log(const char* msg) {
   Serial.println(msg);
 }
