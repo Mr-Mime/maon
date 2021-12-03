@@ -28,3 +28,6 @@ usb:
 usblog:
 	minicom --color=on -l -D $(USB_PORT) -b $(USB_SPEED)
 	clear
+
+erase:
+	$(ESPTOOL) --chip esp8266 --port $(USB_PORT) erase_flash
