@@ -4,10 +4,13 @@
 #include "network.h"
 #include "storage.h"
 
+#define ALERT_PIN 5
+
 void maon_init(void) {
   logger_init();
   network_init();
   storage_init();
+  pinMode(ALERT_PIN, OUTPUT);
 }
 
 void maon_loop(void) {
@@ -25,7 +28,10 @@ void maon_loop(void) {
     // First store the new id
     storage_set_id(server_id);
 
-    // TODO: Turn transistor for light on
+    // Turn alarm on for 10 seconds
+    digitalWrite(ALERT_PIN, HIGH);
+    delay(10000);
+    digitalWrite(ALERT_PIN, LOW);
   }
   
 
