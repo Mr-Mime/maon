@@ -40,6 +40,6 @@ void maon_loop(void) {
   storage_fini();
   logger_fini();
 
-  // Send ESP to sleep
-  ESP.deepSleep(6e6);
+  // Send ESP to sleep for one minute
+  ESP.deepSleep(60e6);
 }
