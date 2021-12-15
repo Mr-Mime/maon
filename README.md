@@ -4,7 +4,7 @@ The maon (most annoying order notifier) makes sure you get notified for each new
 
 ## Hardware
 The maon is based on a toy police siren I found on the street and an esp8266 which was laying around in the office.
-For more information on the hardware check out my project post on hackaday.io (TODO: include link)
+For more information on the hardware check out my [project on hackaday.io](https://hackaday.io/project/183079-maon).
 
 ## Software
 To develop the firmware the [Arduino core for ESP8266](https://github.com/esp8266/Arduino) is used.  
