@@ -1,6 +1,6 @@
 # maon
 
-The maon (most anoying order notifier) makes sure you get notified for each new order placed in your shop.
+The maon (most annoying order notifier) makes sure you get notified for each new order placed in your shop.
 
 ## Hardware
 The maon is based on a toy police siren I found on the street and an esp8266 which was laying around in the office.
@@ -27,5 +27,6 @@ Currently only shops based on [PrestaShop](https://www.prestashop.com) are suppo
 
 ## How to configure?
 In the `Makefile.config` the configuration is done.
-The first section is for wifi configuration and the second for the shop API.
+The first section is for wifi configuration and the second for the shop API.  
+  
 !!! Attention: never make the config file public, as it holds sensitive information !!!
