@@ -1,6 +1,7 @@
 # maon
 
 The maon (most anoying order notifier) makes sure you get notified for each new order placed in your shop.
+The maon (most anoying order notifier) makes sure you get notified for each new order placed in your shop.
 
 ## Hardware
 The maon is based on a toy police siren I found on the street and an esp8266 which was laying around in the office.
